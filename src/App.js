@@ -7,7 +7,7 @@ import {CreateToDoButton} from './CreateToDoButton';
 import {TodoItem} from './TodoItem';
 
 const defaultTodos = [
-  {text: 'Cortar Cebolla', completed: true},
+  {text: 'Cortar Cebolla', completed: false},
   {text: 'Cortar Tomate', completed: true},
   {text: 'Cortar Zanahoria', completed: true},
   {text: 'Blop', completed: false},
@@ -22,6 +22,15 @@ function App(props) {
   const totalTodos = todos.length;
   const filteredTodos = todos.filter((todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase())) );
 
+  function completeTodo (text){
+    var todoTemp = [...todos]
+    var objIndex = todoTemp.findIndex((todo => todo.text === text));
+    todoTemp[objIndex].completed ? todoTemp[objIndex].completed=false: todoTemp[objIndex].completed=true
+    setTodos(todoTemp)
+    console.log("It's alive"+ text)
+  }  
+  
+
   return (
     <>
       <TodoCounter
@@ -33,11 +42,12 @@ function App(props) {
         setSearchValue={setSearchValue}
       />
       <TodoList>
-        {filteredTodos.map(todos => 
+        {filteredTodos.map(todo => 
         <TodoItem 
-          key={todos.text} 
-          text={todos.text}
-          completed={todos.completed} />)}
+          key={todo.text}
+          text={todo.text}
+          completed={todo.completed}
+          completeTodo={completeTodo} />)}
       </TodoList>
       <CreateToDoButton />
     </>
