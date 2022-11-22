@@ -47,7 +47,10 @@ function App(props) {
           key={todo.text}
           text={todo.text}
           completed={todo.completed}
-          completeTodo={completeTodo} />)}
+          completeTodo={completeTodo} 
+          // todos={todos}
+          // setTodos={setTodos}
+          />)}
       </TodoList>
       <CreateToDoButton />
     </>
