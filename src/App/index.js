@@ -1,10 +1,10 @@
 import './App.css';
 import React, { useState } from 'react';
-import { TodoCounter } from './TodoCounter';
-import {TodoSearch} from './TodoSearch';
-import {TodoList} from './TodoList';
-import {CreateToDoButton} from './CreateToDoButton';
-import {TodoItem} from './TodoItem';
+import { TodoCounter } from '../TodoCounter';
+import {TodoSearch} from '../TodoSearch';
+import {TodoList} from '../TodoList';
+import {CreateToDoButton} from '../CreateToDoButton';
+import {TodoItem} from '../TodoItem';
 
 const defaultTodos = [
   {text: 'Cortar Cebolla', completed: false},
@@ -22,13 +22,19 @@ function App(props) {
   const totalTodos = todos.length;
   const filteredTodos = todos.filter((todo) => (todo.text.toLowerCase().includes(searchValue.toLowerCase())) );
 
-  function completeTodo (text){
+  const completeTodo = (text) => {
     var todoTemp = [...todos]
     var objIndex = todoTemp.findIndex((todo => todo.text === text));
     todoTemp[objIndex].completed ? todoTemp[objIndex].completed=false: todoTemp[objIndex].completed=true
     setTodos(todoTemp)
-    console.log("It's alive"+ text)
   }  
+
+  const deleteTodo = (text) => {
+    var todoTemp = [...todos]
+    var objIndex = todoTemp.findIndex((todo => todo.text === text));
+    todoTemp.splice(objIndex,1)
+    setTodos(todoTemp)
+  } 
   
 
   return (
@@ -47,9 +53,8 @@ function App(props) {
           key={todo.text}
           text={todo.text}
           completed={todo.completed}
-          completeTodo={completeTodo} 
-          // todos={todos}
-          // setTodos={setTodos}
+          onComplete={() => completeTodo(todo.text)}
+          onDelete={() => deleteTodo(todo.text)}
           />)}
       </TodoList>
       <CreateToDoButton />
