@@ -28,7 +28,7 @@ function AppUI({
     />
     <TodoList>
       {loading && <p>Loading page, please wait . . .</p>}
-      {/* {error && <p>An error was found, please reload and if the failure persist contact suppot.</p>} */}
+      {error && <p>An error was found, please reload and if the failure persist contact suppot.</p>}
       {(!loading && !filteredTodos.length) && <p>Create your first todo! The time is now!</p>}
       {filteredTodos.map(todo => 
       <TodoItem 
