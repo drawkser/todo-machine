@@ -1,47 +1,56 @@
-import React from 'react';
-import { TodoCounter } from '../TodoCounter';
-import { TodoSearch } from '../TodoSearch';
-import { TodoList } from '../TodoList';
-import { TodoItem } from '../TodoItem';
-import { CreateToDoButton } from '../CreateToDoButton';
+import React, { useContext } from "react";
+import { TodoContext } from "../TodoContext";
+import { TodoCounter } from "../TodoCounter";
+import { TodoSearch } from "../TodoSearch";
+import { TodoList } from "../TodoList";
+import { TodoItem } from "../TodoItem";
+import { CreateToDoButton } from "../CreateToDoButton";
+import { Modal } from "../Modal";
 
-function AppUI({
-  loading,
-  error,
-  totalTodos,
-  completedTodos,
-  searchValue,
-  setSearchValue,
-  filteredTodos,
-  completeTodo,
-  deleteTodo,
-}) {
-  return (
-    <>
-    <TodoCounter
-    total = {totalTodos}
-    completed={completedTodos}
-    />
-    <TodoSearch
-      searchValue={searchValue}
-      setSearchValue={setSearchValue}
-    />
-    <TodoList>
-      {loading && <p>Loading page, please wait . . .</p>}
-      {error && <p>An error was found, please reload and if the failure persist contact suppot.</p>}
-      {(!loading && !filteredTodos.length) && <p>Create your first todo! The time is now!</p>}
-      {filteredTodos.map(todo => 
-      <TodoItem 
-        key={todo.text}
-        text={todo.text}
-        completed={todo.completed}
-        onComplete={() => completeTodo(todo.text)}
-        onDelete={() => deleteTodo(todo.text)}
-        />)}
-    </TodoList>
-    <CreateToDoButton />
-  </>
-  );
+function AppUI() {
+    const {
+        error,
+        loading,
+        filteredTodos,
+        completeTodo,
+        deleteTodo,
+        openModal,
+        setOpenModal,
+    } = useContext(TodoContext);
+    return (
+        <>
+            <TodoCounter />
+            <TodoSearch />
+            <TodoList>
+                {loading && <p>Loading page, please wait . . .</p>}
+                {error && (
+                    <p>
+                        An error was found, please reload and if the failure
+                        persist contact suppot.
+                    </p>
+                )}
+                {!loading && !filteredTodos.length && (
+                    <p>Create your first todo! The time is now!</p>
+                )}
+                {filteredTodos.map((todo) => (
+                    <TodoItem
+                        key={todo.text}
+                        text={todo.text}
+                        completed={todo.completed}
+                        onComplete={() => completeTodo(todo.text)}
+                        onDelete={() => deleteTodo(todo.text)}
+                    />
+                ))}
+            </TodoList>
+            {openModal && (
+                <Modal>
+                    <p>TEST Paragrph</p>
+                </Modal>
+            )}
+
+            <CreateToDoButton setOpenModal={setOpenModal} />
+        </>
+    );
 }
 
 export { AppUI };
