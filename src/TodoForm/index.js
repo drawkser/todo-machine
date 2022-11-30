@@ -8,7 +8,7 @@ function TodoForm() {
     const [ errorMessage, setErrorMessage ] = useState("");
 
     const onChange = (event) => {
-        if(event.target.value != "")
+        if(event.target.value !== "")
             setErrorMessage("");
         setNewTodoValue(event.target.value);
     };
