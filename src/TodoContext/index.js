@@ -28,6 +28,15 @@ function TodoProvider(props) {
         saveTodos(todoTemp);
     };
 
+    const addTodo = (text) => {
+        var todoTemp = [...todos];
+        todoTemp.push({
+            completed: false,
+            text,
+        });
+        saveTodos(todoTemp);
+    };
+
     const deleteTodo = (text) => {
         var todoTemp = [...todos];
         var objIndex = todoTemp.findIndex((todo) => todo.text === text);
@@ -46,6 +55,7 @@ function TodoProvider(props) {
                 filteredTodos,
                 completeTodo,
                 deleteTodo,
+                addTodo,
                 openModal,
                 setOpenModal,
             }}
